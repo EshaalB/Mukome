@@ -1,0 +1,247 @@
+/* ================================
+   🍑 Default Peach Theme
+   ================================ */
+[data-theme="light"][data-color="default"] {
+    --background-color: #fff8ec;
+    --text-color: #333;
+    --primary-color: #ff7a59;
+    --secondary-color: #ffae70;
+    --accent-color: #ff9e70;
+    --navbar-bg: #ffd4b2;
+    --sidebar-bg: #ffe4c4;
+    --card-bg: #ffe4c4;
+    --text-light: rgba(51, 51, 51, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="default"] {
+    --background-color: #1f1a17;
+    --text-color: #f7dcd0;
+    --primary-color: #ffae70;
+    --secondary-color: #ff7a59;
+    --accent-color: #ff9e70;
+    --navbar-bg: #4d3427;
+    --sidebar-bg: #5a4032;
+    --card-bg: #3b2a1f;
+    --text-light: rgba(255, 228, 200, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   🔴 Red Theme
+   ================================ */
+[data-theme="light"][data-color="red"] {
+    --background-color: #fff0f0;
+    --text-color: #330000;
+    --primary-color: #ff4d4d;
+    --secondary-color: #ff9999;
+    --accent-color: #ff6666;
+    --navbar-bg: #ffcccc;
+    --sidebar-bg: #ffe6e6;
+    --card-bg: #ffe6e6;
+    --text-light: rgba(51, 0, 0, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="red"] {
+    --background-color: #1a0e0e;
+    --text-color: #ffe6e6;
+    --primary-color: #ff4d4d;
+    --secondary-color: #990000;
+    --accent-color: #660000;
+    --navbar-bg: #3b0a0a;
+    --sidebar-bg: #4d0000;
+    --card-bg: #330000;
+    --text-light: rgba(255, 230, 230, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   🟣 Purple Theme
+   ================================ */
+[data-theme="light"][data-color="purple"] {
+    --background-color: #f7f0ff;
+    --text-color: #2e003e;
+    --primary-color: #b388eb;
+    --secondary-color: #d8b4f8;
+    --accent-color: #c084fc;
+    --navbar-bg: #f0e0ff;
+    --sidebar-bg: #e9d5ff;
+    --card-bg: #f3e8ff;
+    --text-light: rgba(46, 0, 62, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="purple"] {
+    --background-color: #1d1329;
+    --text-color: #f3e8ff;
+    --primary-color: #d8b4f8;
+    --secondary-color: #b388eb;
+    --accent-color: #c084fc;
+    --navbar-bg: #2f1e45;
+    --sidebar-bg: #3b2757;
+    --card-bg: #2a1d3a;
+    --text-light: rgba(255, 240, 255, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   🔵 Blue Theme
+   ================================ */
+[data-theme="light"][data-color="blue"] {
+    --background-color: #edf6ff;
+    --text-color: #003366;
+    --primary-color: #6cb4ee;
+    --secondary-color: #a3d8ff;
+    --accent-color: #90cdf4;
+    --navbar-bg: #d4ecff;
+    --sidebar-bg: #e6f2ff;
+    --card-bg: #f0faff;
+    --text-light: rgba(0, 51, 102, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="blue"] {
+    --background-color: #0e1a26;
+    --text-color: #e0f2ff;
+    --primary-color: #6cb4ee;
+    --secondary-color: #378fe6;
+    --accent-color: #90cdf4;
+    --navbar-bg: #1c2e40;
+    --sidebar-bg: #22384d;
+    --card-bg: #1a2638;
+    --text-light: rgba(224, 242, 255, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   🟢 Green Theme
+   ================================ */
+[data-theme="light"][data-color="green"] {
+    --background-color: #f3fff5;
+    --text-color: #1b3d2f;
+    --primary-color: #7ed6a5;
+    --secondary-color: #a8e6cf;
+    --accent-color: #98fb98;
+    --navbar-bg: #d5f5e3;
+    --sidebar-bg: #e0f7ea;
+    --card-bg: #eafff0;
+    --text-light: rgba(27, 61, 47, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="green"] {
+    --background-color: #0d1f14;
+    --text-color: #d8fdd9;
+    --primary-color: #7ed6a5;
+    --secondary-color: #55c57a;
+    --accent-color: #98fb98;
+    --navbar-bg: #143c26;
+    --sidebar-bg: #1c5033;
+    --card-bg: #173c29;
+    --text-light: rgba(216, 253, 217, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   🟡 Yellow Theme
+   ================================ */
+[data-theme="light"][data-color="yellow"] {
+    --background-color: #fffef0;
+    --text-color: #4b3f00;
+    --primary-color: #f9d976;
+    --secondary-color: #fff6a3;
+    --accent-color: #ffe066;
+    --navbar-bg: #fff8c6;
+    --sidebar-bg: #fffde7;
+    --card-bg: #fff9cc;
+    --text-light: rgba(75, 63, 0, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="yellow"] {
+    --background-color: #1f1d0f;
+    --text-color: #fffce5;
+    --primary-color: #ffe066;
+    --secondary-color: #d4af37;
+    --accent-color: #f9d976;
+    --navbar-bg: #3d3812;
+    --sidebar-bg: #4a4215;
+    --card-bg: #2e2b0f;
+    --text-light: rgba(255, 252, 229, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   💖 Pink Theme
+   ================================ */
+[data-theme="light"][data-color="pink"] {
+    --background-color: #fff0f5;
+    --text-color: #4d0036;
+    --primary-color: #ff91af;
+    --secondary-color: #ffb6c1;
+    --accent-color: #f48fb1;
+    --navbar-bg: #ffd6e8;
+    --sidebar-bg: #ffe4ec;
+    --card-bg: #fff0f8;
+    --text-light: rgba(77, 0, 54, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"][data-color="pink"] {
+    --background-color: #2c1a25;
+    --text-color: #ffe9f0;
+    --primary-color: #ff91af;
+    --secondary-color: #c71585;
+    --accent-color: #f48fb1;
+    --navbar-bg: #3a1f2c;
+    --sidebar-bg: #4a2c3a;
+    --card-bg: #331a26;
+    --text-light: rgba(255, 233, 240, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   ⚪ Pure White Theme
+   ================================ */
+[data-theme="light"][data-color="white"] {
+    --background-color: #ffffff;
+    --text-color: #222;
+    --primary-color: #666;
+    --secondary-color: #aaa;
+    --accent-color: #ccc;
+    --navbar-bg: #f0f0f0;
+    --sidebar-bg: #f8f8f8;
+    --card-bg: #ffffff;
+    --text-light: rgba(34, 34, 34, 0.6);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"][data-color="white"] {
+    --background-color: #1a1a1a;
+    --text-color: #f1f1f1;
+    --primary-color: #ccc;
+    --secondary-color: #999;
+    --accent-color: #aaa;
+    --navbar-bg: #2c2c2c;
+    --sidebar-bg: #333;
+    --card-bg: #222;
+    --text-light: rgba(241, 241, 241, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
