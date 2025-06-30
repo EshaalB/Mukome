@@ -14,3 +14,58 @@
         transform: translateY(0);
     }
 }
+
+
+textarea.burning {
+    box-shadow: 0 0 20px 10px rgba(255, 100, 0, 0.5);
+}
+
+/* === Burn Effect Styles === */
+.burn-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 120%;
+    pointer-events: none;
+    z-index: 10;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+    transform: scale(1) rotate(0deg);
+    object-fit: cover;
+    animation: flicker 1s infinite ease-in-out;
+}
+
+/* Optional flicker animation */
+@keyframes flicker {
+    0% {
+        opacity: 0.85;
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        opacity: 1;
+        transform: scale(1.03) rotate(1deg);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(0.98) rotate(-1deg);
+    }
+
+    75% {
+        opacity: 1;
+        transform: scale(1.01) rotate(0.5deg);
+    }
+
+    100% {
+        opacity: 0.95;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.tear-effect {
+    background: url('https://i.imgur.com/eq2PPAq.png') center/contain no-repeat;
+    background-size: cover;
+    opacity: 0.7;
+}

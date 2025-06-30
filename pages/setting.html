@@ -5,29 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/setting.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Patrick+Hand&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
+<nav class="navbar">
+    <div class="logo">Mukome</div>
+    <input type="text" placeholder="search.." id="search-bar" aria-label="Search Pages">
+    <div class="nav-items">
+        <div id="theme-toggle">
+            <input type="checkbox" class="checkbox" id="checkbox">
+            <label for="checkbox" class="checkbox-label">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+                <span class="ball"></span>
+            </label>
+        </div>
 
-<body>
-    <!-- Settings -->
-    <section id="settings" class="section">
-        <h2>Settings</h2>
-        <label for="volume">Adjust Volume</label>
-        <input type="range" id="volume" name="volume" min="0" max="100" />
-        <br /><br />
-        <label for="color-select">🎨 Choose Color Theme</label>
-        <select id="color-select">
-            <option value="default">Peach (Default)</option>
-            <option value="red">Red</option>
-            <option value="yellow">Yellow</option>
-            <option value="blue">Blue</option>
-            <option value="purple">Purple</option>
-            <option value="green">Green</option>
-            <option value="pink">Pink</option>
-            <option value="white">Pure White</option>
-        </select>
+        <a href="setting.html" class="settings-icon">
+            <i class="fas fa-cog"></i>
+        </a>
+    </div>
+</nav>
 
-        <a href="../index.html">Go to home</a>
-        <script src="../js/app.js"></script>
-</body>
+<!-- Sidebar -->
+<aside class="sidebar">
+    <ul>
+        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="journal.html"><i class="fas fa-book-open"></i> Journal</a></li>
+        <li><a href="sleep.html"><i class="fas fa-moon"></i> Sleep</a></li>
+        <li><a href="todolist.html"><i class="fas fa-list-check"></i> To Do List</a></li>
+        <li><a href="setting.html"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+</aside>
+<!-- Journal -->
+<div class="tabs">
+    <button data-target="journal" class="active">Journal</button>
+    <button data-target="rant">Quick Rant</button>
+    <button data-target="calender">Calendar</button>
+</div>
+
+<!-- Settings -->
+<section id="settings" class="section">
+    <h2>Settings</h2>
+    <label for="volume">Adjust Volume</label>
+    <input type="range" id="volume" name="volume" min="0" max="100" />
+    <br /><br />
+    <label for="color-select">🎨 Choose Color Theme</label>
+    <select id="color-select">
+        <option value="default">Peach (Default)</option>
+        <option value="red">Red</option>
+        <option value="yellow">Yellow</option>
+        <option value="blue">Blue</option>
+        <option value="purple">Purple</option>
+        <option value="green">Green</option>
+        <option value="pink">Pink</option>
+        <option value="white">Pure White</option>
+    </select>
+
+    <a href="../index.html">Go to home</a>
+    <script src="../js/app.js"></script>
+    <script src="../js/setting.js"></script>
+    </body>
 
 </html>

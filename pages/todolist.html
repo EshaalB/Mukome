@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/todo.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Patrick+Hand&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Mukome</div>
+        <input type="text" placeholder="search.." id="search-bar" aria-label="Search Pages">
+        <div class="nav-items">
+            <div id="theme-toggle">
+                <input type="checkbox" class="checkbox" id="checkbox">
+                <label for="checkbox" class="checkbox-label">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                    <span class="ball"></span>
+                </label>
+            </div>
+
+            <a href="setting.html" class="settings-icon">
+                <i class="fas fa-cog"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="journal.html"><i class="fas fa-book-open"></i> Journal</a></li>
+            <li><a href="sleep.html"><i class="fas fa-moon"></i> Sleep</a></li>
+            <li><a href="todolist.html"><i class="fas fa-list-check"></i> To Do List</a></li>
+            <li><a href="setting.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+    <!-- Journal -->
+    <div class="tabs">
+        <button data-target="journal" class="active">Journal</button>
+        <button data-target="rant">Quick Rant</button>
+        <button data-target="calender">Calendar</button>
+    </div>
+    <!-- Sleep -->
+    <section id="todo" class="section">
+        <h2>🛌 Sleep Tracker</h2>
+        <p>Track your sleep hours and get improvement tips.</p>
+        <input type="time" /> to <input type="time" />
+        <button class="secondary-btn">Get Sleep Suggestion</button>
+    </section>
+    <script src="../js/app.js"></script>
+    <script src="../js/todo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
