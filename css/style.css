@@ -106,6 +106,7 @@ h2 {
     align-items: center;
     box-shadow: 0 3px 6px var(--shadow-color);
     transition: all var(--transition-speed) ease;
+    margin-top: 15px;
 }
 
 .fa-moon,
