@@ -70,54 +70,149 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-document.addEventListener("DOMContentLoaded", () => {
-    const searchBar = document.getElementById("search-bar");
-    const resultsContainer = document.getElementById("search-results");
-
+document.addEventListener('DOMContentLoaded', () => {
+    // Define available pages for search
     const pages = [
-        { name: "Home", url: "index.html" },
-        { name: "Journal", url: "pages/journal.html" },
-        { name: "Sleep", url: "pages/sleep.html" },
-        { name: "To Do", url: "pages/todolist.html" },
-        { name: "Settings", url: "pages/setting.html" }
+        { name: 'Home', path: '/index.html' },
+        { name: 'Journal', path: '/journal.html' },
+        { name: 'Tasks', path: '/tasks.html' },
+        { name: 'Settings', path: '/settings.html' }
     ];
 
-    searchBar.addEventListener("input", () => {
-        const query = searchBar.value.toLowerCase().trim();
-        resultsContainer.innerHTML = "";
+    const searchBar = document.getElementById('search-bar');
+    const searchResults = document.getElementById('search-results');
+    let debounceTimeout;
 
-        if (query.length === 0) return;
+    // Sanitize input to prevent XSS
+    const sanitizeInput = (input) => {
+        const div = document.createElement('div');
+        div.textContent = input;
+        return div.innerHTML;
+    };
 
-        const matches = pages.filter(p => p.name.toLowerCase().includes(query));
-
-        matches.forEach(match => {
-            const div = document.createElement("div");
-            div.className = "search-result-item";
-            div.textContent = match.name;
-            div.addEventListener("click", () => {
-                window.location.href = match.url;
+    // Show search results
+    const showResults = (results) => {
+        searchResults.innerHTML = '';
+        if (results.length === 0) {
+            const noResultItem = document.createElement('div');
+            noResultItem.classList.add('search-result-item');
+            noResultItem.textContent = 'No results found';
+            noResultItem.style.cursor = 'default';
+            noResultItem.style.opacity = '0.7';
+            searchResults.appendChild(noResultItem);
+        } else {
+            results.forEach(page => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('search-result-item');
+                resultItem.textContent = page.name;
+                resultItem.setAttribute('role', 'option');
+                resultItem.setAttribute('tabindex', '0');
+                resultItem.addEventListener('click', () => {
+                    navigateTo(page.path);
+                    searchResults.classList.add('hidden');
+                    searchBar.value = '';
+                });
+                resultItem.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        navigateTo(page.path);
+                        searchResults.classList.add('hidden');
+                        searchBar.value = '';
+                    }
+                });
+                searchResults.appendChild(resultItem);
             });
-            resultsContainer.appendChild(div);
-        });
+        }
+        searchResults.classList.remove('hidden');
+    };
+
+    // Hide search results
+    const hideResults = () => {
+        searchResults.classList.add('hidden');
+        searchResults.innerHTML = '';
+    };
+
+    // Navigate to a page
+    const navigateTo = (path) => {
+        try {
+            // Handle different path formats
+            const basePath = window.location.origin;
+            let fullPath = path;
+
+            // If path is relative, resolve it
+            if (path.startsWith('/')) {
+                fullPath = basePath + path;
+            } else if (!path.startsWith('http')) {
+                const currentPath = window.location.pathname;
+                const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                fullPath = basePath + currentDir + '/' + path;
+            }
+
+            window.location.href = fullPath;
+        } catch (error) {
+            console.error('Navigation error:', error);
+        }
+    };
+
+    // Debounced search function
+    const debounceSearch = (query, delay = 300) => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+            const sanitizedQuery = sanitizeInput(query.trim());
+            if (sanitizedQuery.length === 0) {
+                hideResults();
+                return;
+            }
+
+            const filteredPages = pages.filter(page =>
+                page.name.toLowerCase().includes(sanitizedQuery.toLowerCase())
+            );
+            showResults(filteredPages);
+        }, delay);
+    };
+
+    // Event listeners for search bar
+    searchBar.addEventListener('input', (e) => {
+        debounceSearch(e.target.value);
     });
 
-    // Handle enter key
-    searchBar.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const query = searchBar.value.toLowerCase().trim();
-            const match = pages.find(p => p.name.toLowerCase().includes(query));
-            if (match) {
-                window.location.href = match.url;
-            } else {
-                resultsContainer.innerHTML = "<div class='search-result-item'>No match found</div>";
-            }
+    searchBar.addEventListener('focus', () => {
+        if (searchBar.value.trim().length > 0) {
+            debounceSearch(searchBar.value);
         }
     });
 
-    // Hide results when clicking outside
-    document.addEventListener("click", (e) => {
-        if (!searchBar.contains(e.target) && !resultsContainer.contains(e.target)) {
-            resultsContainer.innerHTML = "";
+    // Hide results on click outside
+    document.addEventListener('click', (e) => {
+        if (!searchBar.contains(e.target) && !searchResults.contains(e.target)) {
+            hideResults();
+        }
+    });
+
+    // Hide results on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            hideResults();
+            searchBar.value = '';
+            searchBar.blur();
+        }
+    });
+
+    // Keyboard navigation for search results
+    searchResults.addEventListener('keydown', (e) => {
+        const items = searchResults.querySelectorAll('.search-result-item');
+        if (items.length === 0) return;
+
+        const currentItem = document.activeElement;
+        const currentIndex = Array.from(items).indexOf(currentItem);
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const nextIndex = (currentIndex + 1) % items.length;
+            items[nextIndex].focus();
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prevIndex = (currentIndex - 1 + items.length) % items.length;
+            items[prevIndex].focus();
         }
     });
 });
