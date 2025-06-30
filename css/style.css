@@ -318,3 +318,63 @@ h2 {
     position: relative;
     border-left: 5px solid var(--accent-color);
 }
+
+/* Sidebar Base Styles */
+.sidebar {
+    transition: transform 0.3s ease;
+}
+
+/* Mobile Hidden */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background: var(--card-bg);
+        transform: translateX(-100%);
+        z-index: 999;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        font-size: 1.5rem;
+        margin-left: 15px;
+    }
+}
+
+/* Default hidden */
+.hamburger {
+    display: none;
+}
+
+.search-results {
+    position: absolute;
+    background: var(--card-bg, white);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100%;
+    top: 60px;
+    left: 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.search-result-item:hover {
+    background-color: #f0f0f0;
+}

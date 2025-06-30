@@ -20,8 +20,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <nav class="navbar">
+    <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+    </div>
     <div class="logo">Mukome</div>
     <input type="text" placeholder="search.." id="search-bar" aria-label="Search Pages">
+    <div id="search-results" class="search-results"></div>
+
     <div class="nav-items">
         <div id="theme-toggle">
             <input type="checkbox" class="checkbox" id="checkbox">
@@ -32,7 +37,7 @@
             </label>
         </div>
 
-        <a href="setting.html" class="settings-icon">
+        <a href="pages/setting.html" class="settings-icon">
             <i class="fas fa-cog"></i>
         </a>
     </div>
@@ -40,12 +45,15 @@
 
 <!-- Sidebar -->
 <aside class="sidebar">
+    <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+    </div>
     <ul>
-        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="journal.html"><i class="fas fa-book-open"></i> Journal</a></li>
-        <li><a href="sleep.html"><i class="fas fa-moon"></i> Sleep</a></li>
-        <li><a href="todolist.html"><i class="fas fa-list-check"></i> To Do List</a></li>
-        <li><a href="setting.html"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="pages/journal.html"><i class="fas fa-book-open"></i> Journal</a></li>
+        <li><a href="pages/sleep.html"><i class="fas fa-moon"></i> Sleep</a></li>
+        <li><a href="pages/todolist.html"><i class="fas fa-list-check"></i> To Do List</a></li>
+        <li><a href="pages/setting.html"><i class="fas fa-cog"></i> Settings</a></li>
     </ul>
 </aside>
 <!-- Journal -->
