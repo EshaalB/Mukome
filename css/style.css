@@ -602,3 +602,33 @@ h2 {
         display: block !important;
     }
 }
+
+/* Search Results */
+.search-results {
+    position: absolute;
+    background: var(--card-bg, white);
+    border: 1px solid var(--text-light);
+    border-radius: 12px;
+    max-width: clamp(250px, 80vw, 350px);
+    width: 90%;
+    top: calc(var(--nav-height) + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 300px;
+    overflow-y: auto;
+    padding: clamp(10px, 2vw, 15px);
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--card-bg);
+    display: none;
+    /* Hide by default */
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease, display var(--transition-speed) ease;
+}
+
+.search-results.active {
+    display: block;
+    /* Show when active */
+    opacity: 1;
+}

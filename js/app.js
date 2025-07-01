@@ -216,3 +216,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const searchBar = document.getElementById('search-bar');
+    const searchResults = document.getElementById('search-results');
+
+    searchBar.addEventListener('input', () => {
+        if (searchBar.value.trim().length > 0) {
+            searchResults.classList.add('active');
+        } else {
+            searchResults.classList.remove('active');
+        }
+    });
+
+    // Optional: Hide search results when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.classList.remove('active');
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", () => {
+    // ...existing code...
+
+    // Button navigation logic for Home page
+    const gotoJournalBtn = document.querySelector(".gotoJournal");
+    const gotoTasksBtn = document.querySelector(".gotoTasks");
+
+    if (gotoJournalBtn) {
+        gotoJournalBtn.addEventListener("click", () => {
+            window.location.href = "pages/journal.html";
+        });
+    }
+    if (gotoTasksBtn) {
+        gotoTasksBtn.addEventListener("click", () => {
+            window.location.href = "pages/todolist.html";
+        });
+    }
+});
