@@ -71,6 +71,13 @@ function setupJournalPage() {
     setupStickerModal();
     document.getElementById(SELECTORS.logEntryBtn.slice(1)).addEventListener("click", saveJournalEntry);
     loadSavedJournalEntry();
+    const viewCalendarBtn = document.querySelector('.button-group .secondary-btn:last-child');
+    if (viewCalendarBtn) {
+        viewCalendarBtn.addEventListener('click', () => {
+            const calendarTab = document.querySelector('.tabs button[data-target="calender"]');
+            if (calendarTab) calendarTab.click();
+        });
+    }
 
     // Global event listeners
     document.addEventListener("keydown", (e) => {
@@ -78,6 +85,7 @@ function setupJournalPage() {
             toggleFixedState(e.target);
         }
     });
+
 }
 
 function setupDateDisplay() {

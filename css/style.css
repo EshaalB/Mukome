@@ -96,7 +96,8 @@ h2 {
     background: var(--color-sidebar);
     width: clamp(45px, 6vw, 50px);
     height: clamp(24px, 3.5vw, 26px);
-    border-radius: 50px;
+    margin-bottom: 13px;
+    border-radius: 5px;
     position: relative;
     padding: 5px;
     cursor: pointer;
