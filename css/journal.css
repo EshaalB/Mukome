@@ -1,16 +1,33 @@
 /* ================================ */
-/* JOURNAL SECTION STYLING         */
+/* JOURNAL SECTION STYLING          */
 /* ================================ */
+:root {
+    --spacing-xs: clamp(4px, 0.8vw, 6px);
+    --spacing-sm: clamp(6px, 1.2vw, 8px);
+    --spacing-md: clamp(8px, 1.5vw, 12px);
+    --spacing-lg: clamp(12px, 2.5vw, 16px);
+    --spacing-xl: clamp(15px, 3vw, 25px);
+    --spacing-xxl: clamp(40px, 8vw, 60px);
+
+    --font-xs: clamp(0.75rem, 1.6vw, 0.85rem);
+    --font-sm: clamp(0.8rem, 1.8vw, 0.9rem);
+    --font-md: clamp(0.9rem, 2vw, 1rem);
+    --font-lg: clamp(1rem, 2.5vw, 1.4rem);
+    --font-xl: clamp(1.2rem, 2.5vw, 1.5rem);
+}
+
 .tabs {
     display: flex;
     justify-content: center;
-    gap: clamp(8px, 1.5vw, 12px);
-    margin: clamp(40px, 8vw, 60px) auto clamp(15px, 3vw, 25px);
+    gap: var(--spacing-md);
+    margin-top: 100px;
+    margin-bottom: 20px;
+
     flex-wrap: wrap;
 }
 
 .tabs button {
-    padding: clamp(6px, 1.2vw, 8px) clamp(12px, 2vw, 16px);
+    padding: var(--spacing-sm) var(--spacing-lg);
     background: transparent;
     border: 2px solid var(--primary-color);
     border-radius: 20px;
@@ -19,7 +36,7 @@
     cursor: pointer;
     color: var(--primary-color);
     transition: background 0.3s, color 0.3s;
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+    font-size: var(--font-sm);
 }
 
 .tabs button.active,
@@ -31,11 +48,14 @@
 /* Main Journal Section */
 .section {
     background: var(--background-color);
-    padding: clamp(12px, 2.5vw, 16px);
-    max-width: 95%;
-    margin: auto;
-    border: 1px solid black;
+    padding: var(--spacing-lg);
+    padding-top: calc(var(--nav-height) + var(--spacing-xl));
+    max-width: min(90%, 700px);
+    margin: 0 auto;
     position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
     /* Grid lines */
     background-image:
         repeating-linear-gradient(to bottom,
@@ -59,42 +79,40 @@
             transparent,
             transparent 24px,
             rgba(255, 255, 255, 0.616) 25px);
-    background-size: 100% 25px, 25px 100%;
+}
+
+.monthYear,
+.timestamp-box {
+    position: absolute;
+    top: var(--spacing-sm);
+    font-size: var(--font-sm);
+    color: var(--text-light);
+    font-weight: bold;
 }
 
 .monthYear {
-    position: absolute;
-    top: clamp(6px, 1.2vw, 8px);
-    left: clamp(8px, 1.5vw, 12px);
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-    color: var(--text-light);
-    font-weight: bold;
+    left: var(--spacing-lg);
+}
+
+.timestamp-box {
+    right: var(--spacing-lg);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .wrapper {
     position: relative;
-    padding: clamp(12px, 2.5vw, 16px);
-    margin-top: clamp(15px, 3vw, 25px);
-}
-
-.timestamp-box {
-    position: absolute;
-    top: clamp(6px, 1.2vw, 8px);
-    right: clamp(8px, 1.5vw, 12px);
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-    color: var(--text-light);
-    font-weight: bold;
-    padding: clamp(3px, 0.8vw, 4px) clamp(6px, 1.2vw, 8px);
-    border-radius: 10px;
-    cursor: pointer;
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
 }
 
 .dayDate {
     text-align: center;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-size: var(--font-lg);
     font-weight: bold;
-    margin-top: 0;
-    margin-bottom: clamp(12px, 2.5vw, 16px);
+    margin: 0 auto var(--spacing-lg);
     color: var(--primary-color);
 }
 
@@ -103,37 +121,38 @@
     border: none;
     outline: none;
     font-family: 'Patrick Hand', cursive;
-    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-size: var(--font-md);
     width: 100%;
     min-height: clamp(80px, 15vw, 120px);
     color: var(--text-color);
     overflow: hidden;
-    transition: text-align 0.3s ease;
     resize: none;
-    padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    text-align: center;
 }
 
 .wrapper textarea::placeholder {
     color: var(--text-light);
     font-style: italic;
+    text-align: center;
 }
 
 /* Mood Selectors */
 .mood-selectors {
     display: flex;
-    gap: clamp(8px, 1.5vw, 10px);
+    gap: var(--spacing-md);
     justify-content: center;
-    margin-top: clamp(6px, 1.5vw, 8px);
+    margin-top: var(--spacing-sm);
 }
 
 .mood-selectors button {
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-size: var(--font-xl);
     background: transparent;
     border: 2px solid var(--accent-color);
     border-radius: 10px;
-    padding: clamp(6px, 1.2vw, 8px);
+    padding: var(--spacing-sm);
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s, color 0.2s;
 }
 
 .mood-selectors button:hover {
@@ -142,21 +161,15 @@
     transform: scale(1.1);
 }
 
-/* Mood Title */
-.moodTitle {
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    color: var(--primary-color);
-}
-
 .mood-btn {
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: var(--font-md);
     background: transparent;
     border: 2px solid var(--accent-color);
     border-radius: 50%;
     width: clamp(30px, 5vw, 35px);
     height: clamp(30px, 5vw, 35px);
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s;
 }
 
 .mood-btn.active {
@@ -169,9 +182,11 @@
     background: var(--card-bg);
 }
 
-/* Log Button */
+/* Buttons */
 .secondary-btn {
-    padding: clamp(8px, 1.5vw, 10px) clamp(16px, 2.5vw, 20px);
+    display: block;
+    margin: var(--spacing-lg) auto 0;
+    padding: var(--spacing-md) var(--spacing-lg);
     border-radius: 25px;
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     color: white;
@@ -180,7 +195,8 @@
     font-family: 'Nunito', sans-serif;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+    font-size: var(--font-sm);
+    max-width: 200px;
 }
 
 .secondary-btn:hover {
@@ -188,28 +204,31 @@
     transform: translateY(-2px);
 }
 
-/* Mini Sidebar Icons */
+/* Mini Sidebar */
 .mini-sidebar {
     position: fixed;
-    right: clamp(8px, 1.5vw, 12px);
-    top: clamp(120px, 25vh, 180px);
+    right: var(--spacing-md);
+    top: calc(var(--nav-height) + var(--spacing-xl));
     background: var(--sidebar-bg);
-    padding: clamp(8px, 1.5vw, 12px);
+    padding: var(--spacing-md);
     border-radius: 15px;
     z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mini-sidebar ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: clamp(8px, 1.5vw, 12px);
+    gap: var(--spacing-md);
+    padding: 0;
+    margin: 0;
 }
 
 .mini-sidebar button {
     background: transparent;
     border: none;
-    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    font-size: var(--font-md);
     cursor: pointer;
     color: var(--text-color);
     transition: color 0.2s ease, transform 0.2s ease;
@@ -220,6 +239,7 @@
     transform: scale(1.1);
 }
 
+/* Stickers & Images */
 .draggable-image {
     position: absolute;
     top: clamp(60px, 12vw, 80px);
@@ -229,7 +249,7 @@
     cursor: move;
     border: 2px dashed var(--accent-color);
     border-radius: 8px;
-    padding: clamp(3px, 0.8vw, 4px);
+    padding: var(--spacing-xs);
     box-shadow: 0 2px 8px var(--shadow-color);
     overflow: visible;
     transform-origin: center center;
@@ -250,7 +270,7 @@
     background: var(--primary-color);
     color: white;
     border-radius: 50%;
-    font-size: clamp(10px, 1.8vw, 12px);
+    font-size: var(--font-xs);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -274,6 +294,7 @@
     cursor: nwse-resize;
 }
 
+/* Modal */
 .sticker-modal {
     position: fixed;
     top: 0;
@@ -293,9 +314,9 @@
 
 .modal-content {
     background: var(--card-bg);
-    padding: clamp(15px, 3vw, 20px);
+    padding: var(--spacing-xl);
     border-radius: 12px;
-    max-width: clamp(80%, 500px, 90%);
+    max-width: min(90%, 500px);
     width: 90%;
     box-shadow: 0 4px 15px var(--shadow-color);
     position: relative;
@@ -304,19 +325,19 @@
 
 .close-sticker-modal {
     position: absolute;
-    top: clamp(8px, 1.5vw, 12px);
-    right: clamp(12px, 2.5vw, 16px);
-    font-size: clamp(18px, 2.5vw, 20px);
+    top: var(--spacing-md);
+    right: var(--spacing-lg);
+    font-size: var(--font-xl);
     cursor: pointer;
     color: var(--primary-color);
 }
 
 .sticker-grid {
     display: flex;
-    gap: clamp(12px, 2.5vw, 16px);
+    gap: var(--spacing-lg);
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: clamp(12px, 2.5vw, 16px);
+    margin-top: var(--spacing-lg);
 }
 
 .sticker-option {
@@ -340,98 +361,99 @@
 }
 
 /* ============================ */
-/* Layout Wrapper               */
+/* CALENDAR COMPONENTS          */
 /* ============================ */
 .calendar-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: clamp(15px, 3vw, 25px);
-    padding: clamp(15px, 3vw, 20px) clamp(8px, 1.5vw, 15px);
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-md);
     flex-wrap: wrap;
-    max-width: 100%;
+    max-width: min(1200px, 95%);
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
-/* ============================ */
-/* Calendar Main Section        */
-/* ============================ */
 .calendar-main {
-    flex: 1 1 clamp(280px, 50vw, 550px);
-    max-width: clamp(90%, 550px, 95%);
+    flex: 1 1 min(90%, 650px);
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: var(--spacing-lg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--card-bg, #fff);
-    padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
-    border-radius: 10px;
-    margin-bottom: clamp(8px, 1.5vw, 10px);
+    background: transparent;
+    padding: 0 var(--spacing-sm) var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 
 #calendarMonthYear {
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: var(--font-lg);
     font-weight: 700;
-    color: var(--primary-color, #6c5ce7);
+    color: var(--primary-color);
 }
 
 #prevMonthBtn,
 #nextMonthBtn {
-    background-color: var(--primary-color, #6c5ce7);
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
-    padding: clamp(5px, 1vw, 7px) clamp(8px, 1.5vw, 12px);
+    padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: 6px;
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+    font-size: var(--font-sm);
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
 #prevMonthBtn:hover,
 #nextMonthBtn:hover {
-    background-color: var(--primary-dark, #5a4bcf);
+    background-color: var(--primary-dark);
     transform: scale(1.05);
 }
 
 #calendarGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: clamp(6px, 1.2vw, 8px);
-    padding: clamp(8px, 1.5vw, 10px);
-    background: var(--card-bg, #f5f5f5);
-    border-radius: 8px;
+    gap: var(--spacing-sm);
+    background: transparent;
 }
 
-/* ============================ */
-/* Day Cell                     */
-/* ============================ */
 .calendar-day {
-    background: var(--card-bg, #fff);
-    padding: clamp(6px, 1.2vw, 8px);
+    background: var(--card-bg);
+    padding: var(--spacing-sm);
     border-radius: 8px;
     min-height: clamp(50px, 8vw, 60px);
-    box-shadow: 0 2px 4px var(--shadow-color, rgba(0, 0, 0, 0.08));
+    box-shadow: 0 2px 4px var(--shadow-color);
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: clamp(10px, 1.8vw, 12px);
-    color: var(--text-color, #333);
+    font-size: var(--font-xs);
+    color: var(--text-color);
+    transition: transform 0.2s ease;
+}
+
+.calendar-day:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .calendar-day.empty {
     background: transparent;
     box-shadow: none;
+    pointer-events: none;
 }
 
 .date-num {
     font-weight: bold;
-    margin-bottom: clamp(2px, 0.8vw, 3px);
+    margin-bottom: var(--spacing-xs);
 }
 
 .day-preview {
-    margin-top: clamp(2px, 0.8vw, 3px);
+    margin-top: var(--spacing-xs);
     cursor: pointer;
 }
 
@@ -442,209 +464,149 @@
     border-radius: 4px;
 }
 
-/* ============================ */
-/* Mood Analysis Section        */
-/* ============================ */
+/* Mood Analysis */
 .calendar-analysis {
-    flex: 0 1 clamp(240px, 35vw, 280px);
-    max-width: clamp(90%, 280px, 95%);
-    background: var(--card-bg, #fff7ed);
-    padding: clamp(12px, 2.5vw, 16px);
+    flex: 0 1 min(90%, 320px);
+    background: var(--card-bg);
+    padding: var(--spacing-lg);
     border-radius: 10px;
     height: fit-content;
-    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #analyzeMoodBtn {
     width: 100%;
-    background-color: var(--secondary-color, #ffae70);
+    background-color: var(--secondary-color);
     color: #fff;
     border: none;
-    padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 15px);
+    padding: var(--spacing-md) var(--spacing-lg);
     border-radius: 8px;
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+    font-size: var(--font-sm);
     cursor: pointer;
     transition: background 0.3s ease;
-    margin-bottom: clamp(8px, 1.5vw, 12px);
+    margin-bottom: var(--spacing-md);
 }
 
 #analyzeMoodBtn:hover {
-    background-color: var(--primary-color, #ff7a59);
+    background-color: var(--primary-color);
 }
 
 .mood-summary {
-    background: var(--card-bg, #ffe4c4);
-    padding: clamp(10px, 2vw, 12px);
+    background: var(--card-bg);
+    padding: var(--spacing-md);
     border-radius: 8px;
-    color: var(--text-color, #333);
-    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+    color: var(--text-color);
+    font-size: var(--font-sm);
     line-height: 1.6;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* ============================ */
-/* Utility                      */
+/* UTILITY & RESPONSIVE         */
 /* ============================ */
 .hidden {
     display: none;
 }
 
-/* ============================ */
-/* Responsive                   */
-/* ============================ */
+@media (min-width: 1025px) {
+    .calendar-wrapper {
+        flex-wrap: nowrap;
+        max-width: min(1200px, 95%);
+    }
+
+    .calendar-main {
+        flex: 3;
+        max-width: 70%;
+    }
+
+    .calendar-analysis {
+        flex: 1;
+        max-width: 28%;
+    }
+
+    .section {
+        max-width: min(700px, 60%);
+    }
+}
+
 @media (max-width: 1024px) {
     .calendar-wrapper {
         flex-direction: column;
         align-items: center;
-        gap: clamp(12px, 2.5vw, 16px);
-    }
-
-    .calendar-main {
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .calendar-analysis {
-        max-width: 100%;
-        width: 100%;
-        margin-top: clamp(12px, 2.5vw, 16px);
-    }
-
-    .mini-sidebar {
-        right: clamp(5px, 1vw, 8px);
-        top: clamp(100px, 20vh, 150px);
-        padding: clamp(6px, 1.2vw, 8px);
-    }
-
-    .draggable-image {
-        width: clamp(70px, 12vw, 100px);
+        gap: var(--spacing-lg);
+        padding-top: var(--spacing-xl);
     }
 
     .section {
-        max-width: 98%;
-        padding: clamp(8px, 2vw, 12px);
+        max-width: 95%;
+        padding: var(--spacing-lg);
+        margin-top: var(--spacing-sm);
     }
 
-    .wrapper textarea {
-        font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-        min-height: clamp(70px, 12vw, 100px);
-    }
-
-    .mood-btn {
-        width: clamp(28px, 4.5vw, 32px);
-        height: clamp(28px, 4.5vw, 32px);
-        font-size: clamp(0.9rem, 1.8vw, 1rem);
+    .mini-sidebar {
+        right: var(--spacing-sm);
+        padding: var(--spacing-sm);
     }
 }
 
 @media (max-width: 768px) {
     .tabs {
-        gap: clamp(6px, 1.2vw, 8px);
-        margin: clamp(25px, 6vw, 40px) auto clamp(10px, 2vw, 15px);
+        gap: var(--spacing-sm);
+        margin-top: 100px;
+        margin-bottom: 20px;
     }
 
-    .tabs button {
-        padding: clamp(5px, 1vw, 6px) clamp(8px, 1.5vw, 12px);
-        font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+    .section {
+        padding-top: calc(var(--nav-height) + var(--spacing-lg));
+        margin-top: var(--spacing-md);
     }
 
-    #calendarGrid {
-        grid-template-columns: repeat(7, 1fr);
-        gap: clamp(5px, 1vw, 6px);
+    .wrapper {
+        padding: var(--spacing-md);
     }
 
-    .calendar-day {
-        min-height: clamp(45px, 7vw, 50px);
-        font-size: clamp(9px, 1.6vw, 11px);
-    }
-
-    .emoji-preview {
-        width: clamp(14px, 2.5vw, 18px);
-        height: clamp(14px, 2.5vw, 18px);
-    }
-
-    .mood-selectors button {
-        font-size: clamp(1rem, 2vw, 1.2rem);
-        padding: clamp(5px, 1vw, 6px);
-    }
-
-    .mood-btn {
-        width: clamp(25px, 4vw, 30px);
-        height: clamp(25px, 4vw, 30px);
-        font-size: clamp(0.8rem, 1.6vw, 0.9rem);
-    }
-
-    .secondary-btn {
-        padding: clamp(6px, 1.2vw, 8px) clamp(12px, 2vw, 16px);
-        font-size: clamp(0.75rem, 1.6vw, 0.85rem);
-    }
-
-    .sticker-option {
-        width: clamp(35px, 7vw, 45px);
-        height: clamp(35px, 7vw, 45px);
-    }
-
-    .modal-content {
-        padding: clamp(12px, 2.5vw, 16px);
-        max-width: 98%;
+    .mini-sidebar {
+        top: calc(var(--nav-height) + var(--spacing-md));
     }
 }
 
 @media (max-width: 480px) {
-    .calendar-wrapper {
-        padding: clamp(8px, 1.5vw, 12px);
+    .tabs {
+        gap: var(--spacing-sm);
+        margin-top: 100px;
+        margin-bottom: 20px;
     }
 
-    .calendar-main {
-        flex: 1 1 100%;
+    .calendar-wrapper {
+        padding: var(--spacing-md);
     }
 
     .calendar-header {
         flex-direction: column;
-        gap: clamp(6px, 1.2vw, 8px);
+        gap: var(--spacing-sm);
+        padding-bottom: var(--spacing-md);
     }
 
-    #prevMonthBtn,
-    #nextMonthBtn {
-        padding: clamp(4px, 0.8vw, 5px) clamp(6px, 1.2vw, 8px);
-        font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+    .section {
+        padding: var(--spacing-md);
+        padding-top: calc(var(--nav-height) + var(--spacing-md));
     }
 
-    #calendarGrid {
-        grid-template-columns: repeat(7, 1fr);
-        gap: clamp(3px, 0.6vw, 4px);
-    }
-
-    .calendar-day {
-        padding: clamp(4px, 0.8vw, 6px);
-        min-height: clamp(35px, 6vw, 45px);
-    }
-
-    .monthYear,
-    .timestamp-box {
-        font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+    .wrapper {
+        padding: var(--spacing-sm);
     }
 
     .dayDate {
-        font-size: clamp(0.9rem, 2vw, 1rem);
+        font-size: var(--font-md);
+    }
+
+    .mood-selectors button {
+        font-size: var(--font-lg);
     }
 
     .mini-sidebar {
-        right: clamp(4px, 0.8vw, 6px);
-        padding: clamp(5px, 1vw, 6px);
-    }
-
-    .mini-sidebar button {
-        font-size: clamp(0.8rem, 1.6vw, 0.9rem);
-    }
-
-    .draggable-image {
-        width: clamp(50px, 10vw, 70px);
-    }
-
-    .control-icon {
-        width: clamp(14px, 2vw, 16px);
-        height: clamp(14px, 2vw, 16px);
-        font-size: clamp(9px, 1.6vw, 10px);
+        top: calc(var(--nav-height) + var(--spacing-sm));
+        right: var(--spacing-xs);
+        padding: var(--spacing-xs);
     }
 }
