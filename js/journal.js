@@ -33,14 +33,15 @@ const SELECTORS = {
 };
 
 const MOODS = [
-    { emoji: "😊", label: "Happy" },
-    { emoji: "😢", label: "Sad" },
-    { emoji: "😠", label: "Angry" },
-    { emoji: "😴", label: "Tired" },
-    { emoji: "😃", label: "Excited" },
-    { emoji: "😔", label: "Depressed" },
-    { emoji: "😍", label: "In Love" },
-    { emoji: "🤯", label: "Overwhelmed" }
+    { img: "../assets/character/happy.png", label: "Happy" },
+    { img: "../assets/character/sad.png", label: "Sad" },
+    { img: "../assets/character/angry.png", label: "Angry" },
+    { img: "../assets/character/tired.png", label: "Tired" },
+    { img: "../assets/character/excited.png", label: "Excited" },
+    { img: "../assets/character/bored.png", label: "Bored" },
+    { img: "../assets/character/love.png", label: "In Love" },
+    { img: "../assets/character/anxious.png", label: "Anxious" },
+    { img: "../assets/character/neutral.png", label: "Neutral" }
 ];
 
 let alignState = "left";
@@ -175,7 +176,13 @@ function initMoodSelector() {
 
     MOODS.forEach(mood => {
         const button = document.createElement('button');
-        button.innerHTML = mood.emoji;
+        const img = document.createElement('img');
+        img.src = mood.img;
+        img.alt = mood.label;
+        img.className = 'mood-png';
+        img.style.width = '32px';
+        img.style.height = '32px';
+        button.appendChild(img);
         button.title = mood.label;
         button.addEventListener('click', () => {
             moodContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
@@ -314,51 +321,81 @@ function showControlsOnce(e) {
     }, 100);
 }
 
+// Touch helpers
+function getTouchPos(e) {
+    if (e.touches && e.touches.length > 0) {
+        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else {
+        return { x: e.clientX, y: e.clientY };
+    }
+}
+
 function makeElementDraggable(element) {
-    element.addEventListener("mousedown", (e) => {
-        if (e.target.classList.contains("control-icon") || element.classList.contains("fixed")) return;
-        isDragging = true;
-        currentElement = element;
-        offset = {
-            x: e.clientX - element.getBoundingClientRect().left,
-            y: e.clientY - element.getBoundingClientRect().top
-        };
-        element.style.zIndex = "100";
-    });
+    // Mouse events
+    element.addEventListener("mousedown", dragStartHandler);
+    // Touch events
+    element.addEventListener("touchstart", dragStartHandler);
+}
 
-    document.addEventListener("mousemove", (e) => {
-        if (!isDragging || !currentElement || currentElement.classList.contains("fixed")) return;
-        const bounds = document.getElementById(SELECTORS.journalSection.slice(1)).getBoundingClientRect();
-        const maxX = bounds.width - currentElement.offsetWidth;
-        const maxY = bounds.height - currentElement.offsetHeight;
-        currentElement.style.left = `${Math.min(maxX, Math.max(0, e.clientX - bounds.left - offset.x))}px`;
-        currentElement.style.top = `${Math.min(maxY, Math.max(0, e.clientY - bounds.top - offset.y))}px`;
-    });
+function dragStartHandler(e) {
+    if ((e.target.classList && e.target.classList.contains("control-icon")) || (this.classList && this.classList.contains("fixed"))) return;
+    e.preventDefault();
+    isDragging = true;
+    currentElement = this;
+    const pos = getTouchPos(e);
+    offset = {
+        x: pos.x - this.getBoundingClientRect().left,
+        y: pos.y - this.getBoundingClientRect().top
+    };
+    this.style.zIndex = "100";
+    // Mouse move/up
+    document.addEventListener("mousemove", dragMoveHandler);
+    document.addEventListener("mouseup", dragEndHandler);
+    // Touch move/end
+    document.addEventListener("touchmove", dragMoveHandler);
+    document.addEventListener("touchend", dragEndHandler);
+}
 
-    document.addEventListener("mouseup", () => {
-        if (isDragging) {
-            isDragging = false;
-            currentElement.style.zIndex = "1";
-            currentElement = null;
-        }
-    });
+function dragMoveHandler(e) {
+    if (!isDragging || !currentElement || currentElement.classList.contains("fixed")) return;
+    const bounds = document.getElementById(SELECTORS.journalSection.slice(1)).getBoundingClientRect();
+    const pos = getTouchPos(e);
+    const maxX = bounds.width - currentElement.offsetWidth;
+    const maxY = bounds.height - currentElement.offsetHeight;
+    currentElement.style.left = `${Math.min(maxX, Math.max(0, pos.x - bounds.left - offset.x))}px`;
+    currentElement.style.top = `${Math.min(maxY, Math.max(0, pos.y - bounds.top - offset.y))}px`;
+}
+
+function dragEndHandler() {
+    if (isDragging) {
+        isDragging = false;
+        if (currentElement) currentElement.style.zIndex = "1";
+        currentElement = null;
+    }
+    document.removeEventListener("mousemove", dragMoveHandler);
+    document.removeEventListener("mouseup", dragEndHandler);
+    document.removeEventListener("touchmove", dragMoveHandler);
+    document.removeEventListener("touchend", dragEndHandler);
 }
 
 function startRotate(e) {
     e.preventDefault();
     e.stopPropagation();
     if (currentElement?.classList.contains("fixed")) return;
-
     isRotating = true;
     currentElement = e.target.closest(".draggable-image");
     const rect = currentElement.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
+    const pos = getTouchPos(e);
     startAngle = currentElement.style.transform ? parseInt(currentElement.style.transform.match(/-?\d+/)[0]) || 0 : 0;
-    startMouseAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-
+    startMouseAngle = Math.atan2(pos.y - centerY, pos.x - centerX);
+    // Mouse
     document.addEventListener("mousemove", rotateElement);
     document.addEventListener("mouseup", stopRotate);
+    // Touch
+    document.addEventListener("touchmove", rotateElement);
+    document.addEventListener("touchend", stopRotate);
 }
 
 function rotateElement(e) {
@@ -366,7 +403,8 @@ function rotateElement(e) {
     const rect = currentElement.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const mouseAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+    const pos = getTouchPos(e);
+    const mouseAngle = Math.atan2(pos.y - centerY, pos.x - centerX);
     const angleDiff = mouseAngle - startMouseAngle;
     currentElement.style.transform = `rotate(${startAngle + angleDiff * (180 / Math.PI)}deg)`;
 }
@@ -375,13 +413,14 @@ function stopRotate() {
     isRotating = false;
     document.removeEventListener("mousemove", rotateElement);
     document.removeEventListener("mouseup", stopRotate);
+    document.removeEventListener("touchmove", rotateElement);
+    document.removeEventListener("touchend", stopRotate);
 }
 
 function startResize(e) {
     e.preventDefault();
     e.stopPropagation();
     if (currentElement?.classList.contains("fixed")) return;
-
     isResizing = true;
     currentElement = e.target.closest(".draggable-image");
     const rect = currentElement.getBoundingClientRect();
@@ -389,20 +428,23 @@ function startResize(e) {
     const startHeight = rect.height;
     const isSticker = currentElement.dataset.isSticker === "true";
     const aspectRatio = isSticker ? startWidth / startHeight : 0;
-
+    // Mouse
     document.addEventListener("mousemove", (e) => resizeElement(e, aspectRatio));
     document.addEventListener("mouseup", stopResize);
+    // Touch
+    document.addEventListener("touchmove", (e) => resizeElement(e, aspectRatio));
+    document.addEventListener("touchend", stopResize);
 }
 
 function resizeElement(e, aspectRatio) {
     if (!isResizing || !currentElement || currentElement.classList.contains("fixed")) return;
     const minSize = 50;
     const journalRect = document.getElementById(SELECTORS.journalSection.slice(1)).getBoundingClientRect();
-    const newWidth = Math.max(minSize, e.clientX - currentElement.getBoundingClientRect().left);
-    const newHeight = aspectRatio ? newWidth / aspectRatio : Math.max(minSize, e.clientY - currentElement.getBoundingClientRect().top);
+    const pos = getTouchPos(e);
+    const newWidth = Math.max(minSize, pos.x - currentElement.getBoundingClientRect().left);
+    const newHeight = aspectRatio ? newWidth / aspectRatio : Math.max(minSize, pos.y - currentElement.getBoundingClientRect().top);
     const maxWidth = journalRect.width - currentElement.offsetLeft;
     const maxHeight = journalRect.height - currentElement.offsetTop;
-
     currentElement.style.width = `${Math.min(maxWidth, newWidth)}px`;
     if (!aspectRatio) {
         currentElement.style.height = `${Math.min(maxHeight, newHeight)}px`;
@@ -413,6 +455,8 @@ function stopResize() {
     isResizing = false;
     document.removeEventListener("mousemove", resizeElement);
     document.removeEventListener("mouseup", stopResize);
+    document.removeEventListener("touchmove", resizeElement);
+    document.removeEventListener("touchend", stopResize);
 }
 
 function saveJournalEntry() {
