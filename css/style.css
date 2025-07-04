@@ -633,3 +633,10 @@ h2 {
     /* Show when active */
     opacity: 1;
 }
+
+.hidden-body > *:not(#site-loader) {
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}

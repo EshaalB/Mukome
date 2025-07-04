@@ -365,21 +365,22 @@
 /* ============================ */
 .calendar-wrapper {
     display: flex;
+    flex-wrap: nowrap;
+    gap: var(--spacing-lg);
     justify-content: center;
-    gap: var(--spacing-xl);
-    padding: var(--spacing-xl) var(--spacing-md);
-    flex-wrap: wrap;
-    max-width: min(1200px, 95%);
+    align-items: stretch;
+    max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+    overflow: visible;
 }
 
-.calendar-main {
-    flex: 1 1 min(90%, 650px);
-    background: var(--card-bg);
-    border-radius: 10px;
-    padding: var(--spacing-lg);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.calendar-main, .calendar-analysis {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .calendar-header {
@@ -434,6 +435,8 @@
     font-size: var(--font-xs);
     color: var(--text-color);
     transition: transform 0.2s ease;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .calendar-day:hover {
@@ -465,15 +468,6 @@
 }
 
 /* Mood Analysis */
-.calendar-analysis {
-    flex: 0 1 min(90%, 320px);
-    background: var(--card-bg);
-    padding: var(--spacing-lg);
-    border-radius: 10px;
-    height: fit-content;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 #analyzeMoodBtn {
     width: 100%;
     background-color: var(--secondary-color);
@@ -492,13 +486,60 @@
 }
 
 .mood-summary {
-    background: var(--card-bg);
-    padding: var(--spacing-md);
-    border-radius: 8px;
+    background: var(--background-color, #fff8ec);
+    padding: var(--spacing-lg) var(--spacing-md);
+    border-radius: 12px;
     color: var(--text-color);
+    font-size: var(--font-md);
+    line-height: 1.7;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    margin-top: 1em;
+    margin-bottom: 1em;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.mood-summary h3 {
+    font-size: var(--font-lg);
+    margin-bottom: 0.5em;
+    color: var(--primary-color);
+    text-align: center;
+}
+.mood-summary h4 {
+    font-size: var(--font-md);
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+    color: var(--secondary-color);
+}
+.mood-summary ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1em 0;
+}
+.mood-summary li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.3em 0.2em;
     font-size: var(--font-sm);
-    line-height: 1.6;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #f0e6d2;
+}
+.mood-summary li:last-child {
+    border-bottom: none;
+}
+.mood-summary img.mood-png, .mood-summary img.calendar-mood-png {
+    width: 24px;
+    height: 24px;
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.mood-summary p {
+    margin: 0.7em 0 0.2em 0;
+    font-size: var(--font-md);
+    text-align: center;
 }
 
 /* ============================ */
@@ -511,21 +552,40 @@
 @media (min-width: 1025px) {
     .calendar-wrapper {
         flex-wrap: nowrap;
-        max-width: min(1200px, 95%);
+        max-width: 1100px;
+        width: 100%;
+        justify-content: space-between;
+        align-items: stretch;
+        overflow: visible;
     }
-
     .calendar-main {
-        flex: 3;
-        max-width: 70%;
+        flex: 0 1 60%;
+        max-width: 60%;
+        min-width: 0;
+        margin-top: 0;
+        margin-bottom: 1.5em;
+        box-sizing: border-box;
     }
-
     .calendar-analysis {
-        flex: 1;
-        max-width: 28%;
+        flex: 0 1 38%;
+        max-width: 38%;
+        min-width: 0;
+        margin-top: 0;
+        margin-bottom: 1.5em;
+        box-sizing: border-box;
     }
+}
 
-    .section {
-        max-width: min(700px, 60%);
+@media (max-width: 1200px) {
+    .calendar-wrapper {
+        max-width: 100vw;
+        width: 100vw;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+    .calendar-main, .calendar-analysis {
+        max-width: 100%;
+        min-width: 0;
     }
 }
 
@@ -533,19 +593,46 @@
     .calendar-wrapper {
         flex-direction: column;
         align-items: center;
-        gap: var(--spacing-lg);
-        padding-top: var(--spacing-xl);
+        gap: var(--spacing-md);
+        max-width: 100vw;
+        width: 100vw;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
     }
-
-    .section {
-        max-width: 95%;
-        padding: var(--spacing-lg);
-        margin-top: var(--spacing-sm);
+    .calendar-main, .calendar-analysis {
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 0.8em 0.5em 0.8em 0.5em;
+        font-size: var(--font-xs);
     }
-
-    .mini-sidebar {
-        right: var(--spacing-sm);
-        padding: var(--spacing-sm);
+    .calendar-main {
+        margin-bottom: 0.7em;
+    }
+    .calendar-analysis {
+        margin-top: 0.7em;
+        margin-bottom: 1em;
+    }
+    .mood-summary {
+        font-size: var(--font-xs);
+        padding: 0.7em 0.5em;
+        border-radius: 8px;
+    }
+    .mood-summary h3 {
+        font-size: var(--font-sm);
+    }
+    .mood-summary h4 {
+        font-size: var(--font-xs);
+    }
+    .mood-summary img.mood-png, .mood-summary img.calendar-mood-png {
+        width: 14px;
+        height: 14px;
+    }
+    .mood-summary li {
+        font-size: var(--font-xs);
+        gap: 0.15em;
     }
 }
 
@@ -642,6 +729,13 @@
         outline: none;
         border-radius: 8px;
     }
+    .calendar-main, .calendar-analysis {
+        max-width: 100vw;
+        min-width: 0;
+        padding: 1em 0.5em 1em 0.5em;
+        border-radius: 8px;
+        margin-top: 0;
+    }
 }
 
 .calendar-mood-png {
@@ -651,4 +745,72 @@
     vertical-align: middle;
     margin-left: 2px;
     margin-right: 2px;
+}
+
+@media (max-width: 600px) {
+    .calendar-mood-png {
+        width: 32px;
+        height: 32px;
+        margin: 1px;
+    }
+}
+
+@media (max-width: 900px) {
+    .calendar-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-lg);
+        padding-top: var(--spacing-xl);
+        max-width: 100vw;
+        width: 100vw;
+    }
+    .calendar-main, .calendar-analysis {
+        max-width: 95vw;
+        min-width: 0;
+        padding: 1.5em 1em 1.2em 1em;
+        border-radius: 14px;
+        margin-top: 0;
+    }
+    .mood-summary {
+        padding: var(--spacing-md) var(--spacing-sm);
+        border-radius: 10px;
+        font-size: var(--font-sm);
+    }
+    .mood-summary h3 {
+        font-size: var(--font-md);
+    }
+    .mood-summary img.mood-png, .mood-summary img.calendar-mood-png {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    #calendarGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+    .calendar-main, .calendar-analysis {
+        padding: 1em 0.5em 1em 0.5em;
+        border-radius: 8px;
+        font-size: var(--font-xs);
+    }
+    .mood-summary {
+        font-size: var(--font-xs);
+        padding: 0.7em 0.5em;
+    }
+    .mood-summary h3 {
+        font-size: var(--font-sm);
+    }
+    .mood-summary h4 {
+        font-size: var(--font-xs);
+    }
+    .mood-summary img.mood-png, .mood-summary img.calendar-mood-png {
+        width: 16px;
+        height: 16px;
+    }
+    .mood-summary li {
+        font-size: var(--font-xs);
+        gap: 0.2em;
+    }
 }

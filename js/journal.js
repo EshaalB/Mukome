@@ -35,13 +35,13 @@ const SELECTORS = {
 const MOODS = [
     { img: "../assets/character/happy.png", label: "Happy" },
     { img: "../assets/character/sad.png", label: "Sad" },
-    { img: "../assets/character/angry.png", label: "Angry" },
-    { img: "../assets/character/tired.png", label: "Tired" },
-    { img: "../assets/character/excited.png", label: "Excited" },
-    { img: "../assets/character/bored.png", label: "Bored" },
-    { img: "../assets/character/love.png", label: "In Love" },
-    { img: "../assets/character/anxious.png", label: "Anxious" },
-    { img: "../assets/character/neutral.png", label: "Neutral" }
+    { img: "../assets/character/happy.png", label: "Angry" },
+    { img: "../assets/character/sad.png", label: "Tired" },
+    { img: "../assets/character/happy.png", label: "Excited" },
+    { img: "../assets/character/sad.png", label: "Bored" },
+    { img: "../assets/character/happy.png", label: "In Love" },
+    { img: "../assets/character/sad.png", label: "Anxious" },
+    { img: "../assets/character/happy.png", label: "Neutral" }
 ];
 
 let alignState = "left";
