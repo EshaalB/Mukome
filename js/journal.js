@@ -242,7 +242,7 @@ function createImageElement(src, isSticker = false) {
     deleteBtn.className = "control-icon delete-icon";
     deleteBtn.innerHTML = "<i class='fas fa-times'></i>";
     deleteBtn.title = "Delete";
-    deleteBtn.addEventListener("click", (e) => {
+    addControlTouchSupport(deleteBtn, (e) => {
         e.stopPropagation();
         container.remove();
     });
@@ -251,18 +251,18 @@ function createImageElement(src, isSticker = false) {
     rotateHandle.className = "control-icon rotate-icon";
     rotateHandle.innerHTML = "<i class='fas fa-sync-alt'></i>";
     rotateHandle.title = "Rotate";
-    rotateHandle.addEventListener("mousedown", startRotate);
+    addControlTouchSupport(rotateHandle, startRotate);
 
     const resizeHandle = document.createElement("span");
     resizeHandle.className = "control-icon resize-icon";
     resizeHandle.title = "Resize";
-    resizeHandle.addEventListener("mousedown", startResize);
+    addControlTouchSupport(resizeHandle, startResize);
 
     const lockBtn = document.createElement("span");
     lockBtn.className = "control-icon lock-icon";
     lockBtn.innerHTML = "<i class='fas fa-lock-open'></i>";
     lockBtn.title = "Lock/Unlock";
-    lockBtn.addEventListener("click", () => toggleFixedState(container, lockBtn));
+    addControlTouchSupport(lockBtn, () => toggleFixedState(container, lockBtn));
 
     img.addEventListener("click", () => {
         if (container.dataset.locked === "true") {
@@ -529,7 +529,7 @@ function createRestoredImageElement(imgData) {
     deleteBtn.className = "control-icon delete-icon";
     deleteBtn.innerHTML = "<i class='fas fa-times'></i>";
     deleteBtn.title = "Delete";
-    deleteBtn.addEventListener("click", (e) => {
+    addControlTouchSupport(deleteBtn, (e) => {
         e.stopPropagation();
         container.remove();
     });
@@ -538,18 +538,18 @@ function createRestoredImageElement(imgData) {
     rotateHandle.className = "control-icon rotate-icon";
     rotateHandle.innerHTML = "<i class='fas fa-sync-alt'></i>";
     rotateHandle.title = "Rotate";
-    rotateHandle.addEventListener("mousedown", startRotate);
+    addControlTouchSupport(rotateHandle, startRotate);
 
     const resizeHandle = document.createElement("span");
     resizeHandle.className = "control-icon resize-icon";
     resizeHandle.title = "Resize";
-    resizeHandle.addEventListener("mousedown", startResize);
+    addControlTouchSupport(resizeHandle, startResize);
 
     const lockBtn = document.createElement("span");
     lockBtn.className = "control-icon lock-icon";
     lockBtn.innerHTML = "<i class='fas fa-lock-open'></i>";
     lockBtn.title = "Lock/Unlock";
-    lockBtn.addEventListener("click", () => toggleFixedState(container, lockBtn));
+    addControlTouchSupport(lockBtn, () => toggleFixedState(container, lockBtn));
 
     img.addEventListener("click", () => {
         if (container.dataset.locked === "true") {
@@ -659,7 +659,7 @@ function setupCalendar() {
                 const entry = JSON.parse(savedEntry);
                 const mood = MOODS.find(m => m.label === entry.mood);
                 if (mood) {
-                    dayElement.innerHTML = `${day}<span class="mood-emoji">${mood.emoji}</span>`;
+                    dayElement.innerHTML = `${day}<span class="mood-emoji"><img src='${mood.img}' alt='${mood.label}' class='mood-png calendar-mood-png'></span>`;
                     dayElement.classList.add('has-entry');
                     dayElement.addEventListener('click', () => loadJournalEntryByDate(dateKey));
                 }
@@ -727,9 +727,9 @@ function setupMoodAnalysis() {
 
         // Find most common mood
         const mostCommonMood = sortedMoods.length > 0 ? sortedMoods[0] : null;
-        const mostCommonMoodEmoji = mostCommonMood
-            ? MOODS.find(m => m.label === mostCommonMood[0])?.emoji
-            : '🤔';
+        const mostCommonMoodImg = mostCommonMood
+            ? `<img src='${MOODS.find(m => m.label === mostCommonMood[0])?.img || ''}' alt='${mostCommonMood[0]}' class='mood-png calendar-mood-png'>`
+            : '';
 
         // Calculate day-of-week patterns
         const dayPatterns = Object.entries(dayOfWeekMoods).map(([day, moods]) => {
@@ -754,8 +754,8 @@ function setupMoodAnalysis() {
             analysisHtml += '<li>No entries found for this month.</li>';
         } else {
             sortedMoods.forEach(([mood, count]) => {
-                const emoji = MOODS.find(m => m.label === mood)?.emoji;
-                analysisHtml += `<li>${emoji} ${mood}: ${count} day${count === 1 ? '' : 's'}</li>`;
+                const img = MOODS.find(m => m.label === mood)?.img;
+                analysisHtml += `<li><img src='${img}' alt='${mood}' class='mood-png calendar-mood-png'> ${mood}: ${count} day${count === 1 ? '' : 's'}</li>`;
             });
         }
         analysisHtml += '</ul>';
@@ -766,7 +766,8 @@ function setupMoodAnalysis() {
         } else {
             dayPatterns.forEach(pattern => {
                 if (pattern.count > 0) {
-                    analysisHtml += `<li>${pattern.day} is most likely to be ${pattern.mood} ${pattern.emoji} (${pattern.percentage}%)</li>`;
+                    const img = MOODS.find(m => m.label === pattern.mood)?.img;
+                    analysisHtml += `<li>${pattern.day} is most likely to be ${pattern.mood} <img src='${img}' alt='${pattern.mood}' class='mood-png calendar-mood-png'> (${pattern.percentage}%)</li>`;
                 }
             });
         }
@@ -774,7 +775,7 @@ function setupMoodAnalysis() {
 
         analysisHtml += '<h4>Verdict</h4>';
         analysisHtml += mostCommonMood
-            ? `<p>Your most common mood this month was ${mostCommonMood[0]} ${mostCommonMoodEmoji}, appearing ${mostCommonMood[1]} time${mostCommonMood[1] === 1 ? '' : 's'}.</p>`
+            ? `<p>Your most common mood this month was ${mostCommonMood[0]} ${mostCommonMoodImg}, appearing ${mostCommonMood[1]} time${mostCommonMood[1] === 1 ? '' : 's'}.</p>`
             : '<p>No dominant mood detected this month.</p>';
 
         moodAnalysisResult.innerHTML = analysisHtml;
@@ -853,3 +854,12 @@ function initJournal() {
 }
 
 window.addEventListener("load", initJournal);
+
+// Add touch support for control icons (rotate, resize, lock, delete)
+function addControlTouchSupport(control, handler) {
+    control.addEventListener('mousedown', handler);
+    control.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        handler(e);
+    });
+}
