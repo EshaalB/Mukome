@@ -1,38 +1,13 @@
+// Optimized and organized app.js
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Apply saved theme and color
+    // === Theme and Color Management ===
     const savedTheme = localStorage.getItem("theme") || "light";
     const savedColor = localStorage.getItem("color") || "default";
-
     document.documentElement.setAttribute("data-theme", savedTheme);
     document.documentElement.setAttribute("data-color", savedColor);
 
-    const checkbox = document.getElementById("checkbox");
-    if (checkbox) {
-        checkbox.checked = savedTheme === "dark";
-        checkbox.addEventListener("change", () => {
-            const newTheme = checkbox.checked ? "dark" : "light";
-            document.documentElement.setAttribute("data-theme", newTheme);
-            localStorage.setItem("theme", newTheme);
-        });
-    }
-
-    const colorSelect = document.getElementById("color-select");
-    if (colorSelect) {
-        colorSelect.value = savedColor;
-        colorSelect.addEventListener("change", (e) => {
-            const color = e.target.value;
-            document.documentElement.setAttribute("data-color", color);
-            localStorage.setItem("color", color);
-        });
-    }
-});
-document.addEventListener("DOMContentLoaded", () => {
     // Theme toggle
-    const savedTheme = localStorage.getItem("theme") || "light";
-    const savedColor = localStorage.getItem("color") || "default";
-    document.documentElement.setAttribute("data-theme", savedTheme);
-    document.documentElement.setAttribute("data-color", savedColor);
-
     const checkbox = document.getElementById("checkbox");
     if (checkbox) {
         checkbox.checked = savedTheme === "dark";
@@ -43,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Color select
     const colorSelect = document.getElementById("color-select");
     if (colorSelect) {
         colorSelect.value = savedColor;
@@ -53,45 +29,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Hamburger toggle
+    // === Sidebar Hamburger Toggle ===
     const hamburger = document.getElementById("hamburger");
     const sidebar = document.querySelector(".sidebar");
-
     if (hamburger && sidebar) {
         hamburger.addEventListener("click", () => {
             sidebar.classList.toggle("active");
         });
-
-        // Optional: close sidebar on link click (for mobile)
+        // Close sidebar on link click (for mobile)
         sidebar.querySelectorAll("a").forEach(link => {
             link.addEventListener("click", () => {
                 sidebar.classList.remove("active");
             });
         });
     }
-});
-document.addEventListener('DOMContentLoaded', () => {
-    // Define available pages for search
+
+    // === Search Bar Functionality ===
     const pages = [
         { name: 'Home', path: '/index.html' },
         { name: 'Journal', path: '/journal.html' },
         { name: 'Tasks', path: '/tasks.html' },
         { name: 'Settings', path: '/settings.html' }
     ];
-
     const searchBar = document.getElementById('search-bar');
     const searchResults = document.getElementById('search-results');
     let debounceTimeout;
 
-    // Sanitize input to prevent XSS
-    const sanitizeInput = (input) => {
+    function sanitizeInput(input) {
         const div = document.createElement('div');
         div.textContent = input;
         return div.innerHTML;
-    };
+    }
 
-    // Show search results
-    const showResults = (results) => {
+    function showResults(results) {
         searchResults.innerHTML = '';
         if (results.length === 0) {
             const noResultItem = document.createElement('div');
@@ -123,22 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         searchResults.classList.remove('hidden');
-    };
+    }
 
-    // Hide search results
-    const hideResults = () => {
+    function hideResults() {
         searchResults.classList.add('hidden');
         searchResults.innerHTML = '';
-    };
+    }
 
-    // Navigate to a page
-    const navigateTo = (path) => {
+    function navigateTo(path) {
         try {
-            // Handle different path formats
             const basePath = window.location.origin;
             let fullPath = path;
-
-            // If path is relative, resolve it
             if (path.startsWith('/')) {
                 fullPath = basePath + path;
             } else if (!path.startsWith('http')) {
@@ -146,15 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
                 fullPath = basePath + currentDir + '/' + path;
             }
-
             window.location.href = fullPath;
         } catch (error) {
             console.error('Navigation error:', error);
         }
-    };
+    }
 
-    // Debounced search function
-    const debounceSearch = (query, delay = 300) => {
+    function debounceSearch(query, delay = 300) {
         clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(() => {
             const sanitizedQuery = sanitizeInput(query.trim());
@@ -162,85 +125,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 hideResults();
                 return;
             }
-
             const filteredPages = pages.filter(page =>
                 page.name.toLowerCase().includes(sanitizedQuery.toLowerCase())
             );
             showResults(filteredPages);
         }, delay);
-    };
+    }
 
-    // Event listeners for search bar
-    searchBar.addEventListener('input', (e) => {
-        debounceSearch(e.target.value);
-    });
+    if (searchBar && searchResults) {
+        searchBar.addEventListener('input', (e) => {
+            debounceSearch(e.target.value);
+        });
+        searchBar.addEventListener('focus', () => {
+            if (searchBar.value.trim().length > 0) {
+                debounceSearch(searchBar.value);
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (!searchBar.contains(e.target) && !searchResults.contains(e.target)) {
+                hideResults();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideResults();
+                searchBar.value = '';
+                searchBar.blur();
+            }
+        });
+    }
 
-    searchBar.addEventListener('focus', () => {
-        if (searchBar.value.trim().length > 0) {
-            debounceSearch(searchBar.value);
-        }
-    });
-
-    // Hide results on click outside
-    document.addEventListener('click', (e) => {
-        if (!searchBar.contains(e.target) && !searchResults.contains(e.target)) {
-            hideResults();
-        }
-    });
-
-    // Hide results on ESC key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            hideResults();
-            searchBar.value = '';
-            searchBar.blur();
-        }
-    });
-
-    // Keyboard navigation for search results
-    searchResults.addEventListener('keydown', (e) => {
-        const items = searchResults.querySelectorAll('.search-result-item');
-        if (items.length === 0) return;
-
-        const currentItem = document.activeElement;
-        const currentIndex = Array.from(items).indexOf(currentItem);
-
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            const nextIndex = (currentIndex + 1) % items.length;
-            items[nextIndex].focus();
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            const prevIndex = (currentIndex - 1 + items.length) % items.length;
-            items[prevIndex].focus();
-        }
-    });
+ 
 });
-document.addEventListener('DOMContentLoaded', () => {
-    const searchBar = document.getElementById('search-bar');
-    const searchResults = document.getElementById('search-results');
 
-    searchBar.addEventListener('input', () => {
-        if (searchBar.value.trim().length > 0) {
-            searchResults.classList.add('active');
-        } else {
-            searchResults.classList.remove('active');
-        }
-    });
-
-    // Optional: Hide search results when clicking outside
-    document.addEventListener('click', (event) => {
-        if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
-            searchResults.classList.remove('active');
-        }
-    });
-});
 document.addEventListener("DOMContentLoaded", () => {
-    // ...existing code...
-
     // Button navigation logic for Home page
     const gotoJournalBtn = document.querySelector(".gotoJournal");
     const gotoTasksBtn = document.querySelector(".gotoTasks");
+
+    
 
     if (gotoJournalBtn) {
         gotoJournalBtn.addEventListener("click", () => {
@@ -252,4 +175,23 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "pages/todolist.html";
         });
     }
+       // === Quote Generator ===
+       const quoteBox = document.getElementById("quoteBox");
+
+       if (quoteBox) {
+           fetch("https://api.allorigins.win/raw?url=https://zenquotes.io/api/random")
+   
+             .then(res => res.json())
+             .then(data => {
+               if (Array.isArray(data) && data[0].q && data[0].a) {
+                 quoteBox.textContent = `"${data[0].q}" — ${data[0].a}`;
+               } else {
+                 quoteBox.textContent = `"Your daily quote goes here."`;
+               }
+             })
+             .catch(err => {
+               console.error("ZenQuotes fetch error:", err);
+               quoteBox.textContent = `"Your daily quote goes here."`;
+             });
+         }
 });
